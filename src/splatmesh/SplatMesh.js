@@ -9,7 +9,7 @@ import { uintEncodedFloat, rgbaArrayToInteger } from '../Util.js';
 import { Constants } from '../Constants.js';
 import { SceneRevealMode } from '../SceneRevealMode.js';
 import { LogLevel } from '../LogLevel.js';
-import { clamp, getSphericalHarmonicsComponentCountForDegree, rgbaArrayToInteger } from '../Util.js';
+import { clamp, getSphericalHarmonicsComponentCountForDegree } from '../Util.js';
 
 const dummyGeometry = new THREE.BufferGeometry();
 const dummyMaterial = new THREE.MeshBasicMaterial();
