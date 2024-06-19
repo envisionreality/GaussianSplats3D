@@ -9,7 +9,7 @@ import { uintEncodedFloat, rgbaArrayToInteger } from '../Util.js';
 import { Constants } from '../Constants.js';
 import { SceneRevealMode } from '../SceneRevealMode.js';
 import { LogLevel } from '../LogLevel.js';
-import { clamp, getSphericalHarmonicsComponentCountForDegree } from '../Util.js';
+import { clamp, getSphericalHarmonicsComponentCountForDegree, rgbaArrayToInteger } from '../Util.js';
 
 const dummyGeometry = new THREE.BufferGeometry();
 const dummyMaterial = new THREE.MeshBasicMaterial();
@@ -1826,6 +1826,32 @@ export class SplatMesh extends THREE.Mesh {
         return this.globalSplatIndexToLocalSplatIndexMap[globalIndex];
     }
 
+    /**
+     * This was added in by Benjamin it is used to update a splat to a new color
+     * @param {*} global_indexes the global indexes which will have their color changed
+     * @param {*} r the r color
+     * @param {*} g the g color
+     * @param {*} b the b color
+     * @param {*} a the alpha color
+     */
+    updateGPUSplatColors = function (global_indexes, r, g, b, a) {
+        for (let i = 0; i < this.scenes.length; i++) {
+            const scene = this.getScene(i);
+            const splatBuffer = scene.splatBuffer;
+    
+            for (i of global_indexes) {
+                const sectionIndex = splatBuffer.globalSplatIndexToSectionMap[i];
+                const section = splatBuffer.sections[sectionIndex];
+                const localSplatIndex = i - section.splatCountOffset;
+                const colorDestBase = localSplatIndex * SplatBuffer.ColorComponentCount;
+    
+                this.material.uniforms.centersColorsTexture.value.source.data.data[colorDestBase] = rgbaArrayToInteger([r,g,b,a], 0);
+            }
+        }
+    
+        this.material.uniforms.centersColorsTexture.value.needsUpdate = true;
+    }
+
     static getIntegerMatrixArray(matrix) {
         const matrixElements = matrix.elements;
         const intMatrixArray = [];
@@ -1835,3 +1861,5 @@ export class SplatMesh extends THREE.Mesh {
         return intMatrixArray;
     }
 }
+
+
