@@ -10,6 +10,7 @@ import { Constants } from '../Constants.js';
 import { SceneRevealMode } from '../SceneRevealMode.js';
 import { LogLevel } from '../LogLevel.js';
 import { clamp, getSphericalHarmonicsComponentCountForDegree } from '../Util.js';
+import {SplatBuffer} from "../loaders/SplatBuffer.js"
 
 const dummyGeometry = new THREE.BufferGeometry();
 const dummyMaterial = new THREE.MeshBasicMaterial();
