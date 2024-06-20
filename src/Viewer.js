@@ -745,7 +745,6 @@ export class Viewer {
                 if (progressiveLoad) {
                     if (finalBuild) {
                         downloadDone = true;
-                        this.onDownloadDone();
                         this.loadingProgressBar.hide();
                     } else {
                         this.loadingProgressBar.setProgress(downloadedPercentage);
@@ -1156,6 +1155,7 @@ export class Viewer {
             const onSplatTreeReady = (finished) => {
                 if (this.isDisposingOrDisposed()) return;
                 if (finished && splatOptimizingTaskId) {
+                    this.onDownloadDone()
                     this.loadingSpinner.removeTask(splatOptimizingTaskId);
                     splatOptimizingTaskId = null;
                 }
