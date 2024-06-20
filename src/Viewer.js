@@ -182,6 +182,8 @@ export class Viewer {
 
         this.createSplatMesh();
 
+        this.onDownloadDone = ()=>{}
+
         this.controls = null;
         this.perspectiveControls = null;
         this.orthographicControls = null;
@@ -743,6 +745,7 @@ export class Viewer {
                 if (progressiveLoad) {
                     if (finalBuild) {
                         downloadDone = true;
+                        this.onDownloadDone();
                         this.loadingProgressBar.hide();
                     } else {
                         this.loadingProgressBar.setProgress(downloadedPercentage);

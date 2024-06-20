@@ -37,7 +37,7 @@ export class SplatMesh extends THREE.Mesh {
                 enableDistancesComputationOnGPU = true, integerBasedDistancesComputation = false,
                 antialiased = false, maxScreenSpaceSplatSize = 1024, logLevel = LogLevel.None, sphericalHarmonicsDegree = 0) {
         super(dummyGeometry, dummyMaterial);
-
+        window.mesh = this
         // Reference to a Three.js renderer
         this.renderer = undefined;
 
